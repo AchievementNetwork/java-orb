@@ -1,0 +1,19 @@
+description: >
+  Build project
+
+parameters:
+  maven-settings:
+    description: Location of Maven settings file
+    type: string
+    default: .circleci/settings.xml
+  maven-flags:
+    description: Additional flags to pass to Maven
+    type: string
+    default: -B -q
+
+steps:
+  - cache-dependencies
+  - run:
+      name: Build
+      command: |
+        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> compile
