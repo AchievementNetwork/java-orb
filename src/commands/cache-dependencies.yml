@@ -24,4 +24,4 @@ steps:
   - save_cache:
       key: maven-deps-{{ checksum "pom.xml" }}
       paths:
-        - .m2
+        - /home/circleci/.m2
