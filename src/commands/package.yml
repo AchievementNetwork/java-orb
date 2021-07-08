@@ -15,6 +15,6 @@ steps:
   - cache-dependencies
   - setup_remote_docker
   - run:
-      name: Create Docker image
+      name: Create application JAR
       command: |
-        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> package dockerfile:build
+        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> package
