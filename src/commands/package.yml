@@ -13,7 +13,6 @@ parameters:
 
 steps:
   - cache-dependencies
-  - setup_remote_docker
   - run:
       name: Create application JAR
       command: |
