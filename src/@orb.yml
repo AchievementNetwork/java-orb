@@ -5,8 +5,8 @@ description: >
 
 # This information will be displayed in the orb registry and is not mandatory.
 display:
-  home_url: https://spring.io/projects/spring-boot
-  source_url: https://github.com/AchievementNetwork/go-orb
+  home_url: https://maven.apache.org/
+  source_url: https://github.com/AchievementNetwork/java-orb
 
 # If your orb requires other orbs, you can import them like this. Otherwise remove the "orbs" stanza.
 # orbs:
