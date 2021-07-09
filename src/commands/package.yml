@@ -13,7 +13,7 @@ parameters:
   repository:
     description: ECR repository containing the image
     type: string
-    default: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/achievementnetwork/${CIRCLE_PROJECT_REPONAME}
+    default: achievementnetwork/${CIRCLE_PROJECT_REPONAME}
   tag:
     description: Tag of the Docker image
     type: string
