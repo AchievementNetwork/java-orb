@@ -10,6 +10,14 @@ parameters:
     description: Additional flags to pass to Maven
     type: string
     default: -B -q -Ddependency-check.skip=true -DskipTests=true -Dcheckstyle.skip
+  repository:
+    description: ECR repository containing the image
+    type: string
+    default: achievementnetwork/${CIRCLE_PROJECT_REPONAME}
+  tag:
+    description: Tag of the Docker image
+    type: string
+    default: ${CIRCLE_SHA1:0:7}
 
 steps:
   - cache-dependencies
@@ -17,4 +25,4 @@ steps:
   - run:
       name: Create Docker image
       command: |
-        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> package dockerfile:build
+        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> -Ddockerfile.repository=<<parameters.repository>> -Ddockerfile.tag=<<parameters.tag>> package dockerfile:build dockerfile:tag
