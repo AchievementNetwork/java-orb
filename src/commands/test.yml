@@ -1,0 +1,67 @@
+description: >
+  Run tests with code coverage
+
+parameters:
+  artifact-directory:
+    description: Directory to place test coverage artifacts into
+    type: string
+    default: /tmp/artifacts
+  maven-settings:
+    description: Location of Maven settings file
+    type: string
+    default: .circleci/settings.xml
+  maven-flags:
+    description: Additional flags to pass to Maven
+    type: string
+    default: -B -q
+  test-reporter-id:
+    description: Identifier for this project to report test coverage to code climate
+    type: string
+    default: ''
+
+steps:
+  - cache-dependencies
+  - run:
+      name: Create a build artifact directory
+      command: |
+        mkdir -p << parameters.artifact-directory >>
+  - when:
+      condition: << parameters.test-reporter-id >>
+      steps:
+        - run:
+            name: Notify Code Climate
+            command: |
+              export CC_TEST_REPORTER_ID=<< parameters.test-reporter-id >>
+              export GIT_COMMIT_SHA=${CIRCLE_SHA1}
+              export GIT_BRANCH=${CIRCLE_BRANCH}
+
+              # Download the Code Climate reporter
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+              chmod +x ./cc-test-reporter
+
+              # Notify Code Climate prior to test run
+              ./cc-test-reporter before-build
+  - run:
+      name: Unit Tests with coverage
+      command: |
+        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> test
+  - when:
+      condition: << parameters.test-reporter-id >>
+      steps:
+        - run:
+            name: Upload Coverage to Code Climate
+            command: |
+              export CC_TEST_REPORTER_ID=<< parameters.test-reporter-id >>
+              export GIT_COMMIT_SHA=${CIRCLE_SHA1}
+              export GIT_BRANCH=${CIRCLE_BRANCH}
+              export JACOCO_SOURCE_PATH=src/main/java
+
+              # Upload the coverage report
+              ./cc-test-reporter format-coverage -t jacoco target/reports/jacoco.xml -p github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/
+              ./cc-test-reporter upload-coverage
+  - run:
+      name: Copy over test coverage artifacts
+      command: |
+        cp -r target/reports << parameters.artifact-directory >>
+  - store_artifacts:
+      path: << parameters.artifact-directory >>

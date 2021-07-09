@@ -4,7 +4,7 @@ Easily add and author [Reusable Commands](https://circleci.com/docs/2.0/reusing-
 
 Each _YAML_ file within this directory will be treated as an orb command, with a name which matches its filename.
 
-View the included _[greet.yml](./greet.yml)_ example.
+Example:
 
 ```yaml
 description: >
@@ -25,3 +25,8 @@ steps:
 ## See:
  - [Orb Author Intro](https://circleci.com/docs/2.0/orb-author-intro/#section=configuration)
  - [How to author commands](https://circleci.com/docs/2.0/reusing-config/#authoring-reusable-commands)
+
+# Naming
+
+The names of commands should reflect the [Maven lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html) where possible to reduce confusion.
+

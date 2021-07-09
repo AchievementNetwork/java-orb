@@ -1,11 +1,12 @@
 description: >
-  This is a sample executor using Docker and Node.
+  Default executor for Java/Spring Boot projects
+
 docker:
-  - image: 'cimg/node:<<parameters.tag>>'
+  - image: circleci/openjdk:<<parameters.version>>-jdk
+
 parameters:
-  tag:
-    default: lts
+  version:
     description: >
-      Pick a specific circleci/node image variant:
-      https://hub.docker.com/r/cimg/node/tags
+      The version of Java to use
     type: string
+    default: '11'

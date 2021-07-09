@@ -1,0 +1,14 @@
+description: >
+  Example of a job that will compile Java using Maven
+
+usage:
+  version: 2.1
+
+  orbs:
+    java: achievementnetwork/java-orb@1.0.0
+
+  jobs:
+    maven-build:
+      executor: java/default
+      steps:
+        - java/compile
