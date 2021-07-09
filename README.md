@@ -1,4 +1,4 @@
-# Achievement Network CircleCI Orb for Java/Spring Boot projects
+# Achievement Network CircleCI Orb for Java/Spring Boot projects using Maven
 
 [![CircleCI Build Status](https://circleci.com/gh/AchievementNetwork/java-orb.svg?style=shield "CircleCI Build Status")](https://circleci.com/gh/AchievementNetwork/java-orb) [![CircleCI Orb Version](https://badges.circleci.com/orbs/achievementnetwork/java-orb.svg)](https://circleci.com/orbs/registry/orb/achievementnetwork/java-orb) [![GitHub License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/AchievementNetwork/java-orb/master/LICENSE) [![CircleCI Community](https://img.shields.io/badge/community-CircleCI%20Discuss-343434.svg)](https://discuss.circleci.com/c/ecosystem/orbs)
 
