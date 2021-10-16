@@ -14,6 +14,10 @@ parameters:
     description: Additional flags to pass to Maven
     type: string
     default: -B -q
+  test-report-directory:
+    description: Directory to find test reports
+    type: string
+    default: target/reports
   test-reporter-id:
     description: Identifier for this project to report test coverage to code climate
     type: string
@@ -62,6 +66,6 @@ steps:
   - run:
       name: Copy over test coverage artifacts
       command: |
-        cp -r target/reports << parameters.artifact-directory >>
+        cp -r << parameters.test-report-directory >> << parameters.artifact-directory >>
   - store_artifacts:
       path: << parameters.artifact-directory >>

@@ -22,6 +22,10 @@ parameters:
     description: Additional flags to pass to Maven
     type: string
     default: -B -q
+  test-report-directory:
+    description: Directory to find test reports
+    type: string
+    default: target/reports
   test-reporter-id:
     description: Identifier for this project to report test coverage to code climate
     type: string
@@ -32,4 +36,5 @@ steps:
       artifact-directory: << parameters.artifact-directory >>
       maven-settings: << parameters.maven-settings >>
       maven-flags: << parameters.maven-flags >>
+      test-report-directory:  <<  parameters.test-report-directory >>
       test-reporter-id: << parameters.test-reporter-id >>
