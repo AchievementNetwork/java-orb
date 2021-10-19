@@ -14,6 +14,10 @@ parameters:
     description: Additional flags to pass to Maven
     type: string
     default: -B -q
+  test-coverage-file:
+    description: File containing test coverage information
+    type: string
+    default: target/reports/jacoco.xml
   test-report-directory:
     description: Directory to find test reports
     type: string
@@ -61,7 +65,7 @@ steps:
               export JACOCO_SOURCE_PATH=src/main/java
 
               # Upload the coverage report
-              ./cc-test-reporter format-coverage -t jacoco target/reports/jacoco.xml -p github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/
+              ./cc-test-reporter format-coverage -t jacoco << parameters.test-coverage-file >> -p github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/
               ./cc-test-reporter upload-coverage
   - run:
       name: Copy over test coverage artifacts
