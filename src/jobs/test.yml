@@ -22,6 +22,10 @@ parameters:
     description: Additional flags to pass to Maven
     type: string
     default: -B -q
+  test-coverage-file:
+    description: File containing test coverage information
+    type: string
+    default: target/reports/jacoco.xml
   test-report-directory:
     description: Directory to find test reports
     type: string
@@ -36,5 +40,6 @@ steps:
       artifact-directory: << parameters.artifact-directory >>
       maven-settings: << parameters.maven-settings >>
       maven-flags: << parameters.maven-flags >>
+      test-coverage-file:  <<  parameters.test-coverage-file >>
       test-report-directory:  <<  parameters.test-report-directory >>
       test-reporter-id: << parameters.test-reporter-id >>
