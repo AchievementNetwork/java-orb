@@ -24,7 +24,7 @@ steps:
       command: |
         for project in <<parameters.project>>; do
           curl -X POST \
-            --header "Circle-Token: <<parameters.api-token>>" \
+            --header "Circle-Token: ${<<parameters.api-token>>}" \
             --header 'Accept: text/plain' \
             --header 'Content-Type: application/json' \
             --data '{"branch":"<<parameters.branch>>"}' \
