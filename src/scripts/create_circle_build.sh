@@ -17,7 +17,7 @@ if [ -z "${CIRCLECI_API_TOKEN-}" ]; then
 fi
 
 for project in ${PROJECTS-}; do
-	OUTPUT_FILE=$(mktemp -t circleci)
+	OUTPUT_FILE=$(mktemp circleci.XXXXXX)
 	TMP_FILES+=("${OUTPUT_FILE}")
 	CURL_CMD=(curl \
 		--request POST \
