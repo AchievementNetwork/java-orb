@@ -1,6 +1,9 @@
 description: >
   Build downstream project
 
+docker:
+  - image: cimg/base:stable
+
 parameters:
   project:
     description: >
