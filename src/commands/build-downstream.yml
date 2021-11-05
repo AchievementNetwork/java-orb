@@ -23,10 +23,12 @@ steps:
       name: Starting downstream build
       command: |
         for project in <<parameters.project>>; do
-          curl -X POST \
+          CIRCLE_JOB_INFO=$(curl -X POST \
+            --silent
             --header "Circle-Token: ${<<parameters.api-token>>}" \
             --header 'Accept: text/plain' \
             --header 'Content-Type: application/json' \
             --data '{"branch":"<<parameters.branch>>"}' \
-            https://circleci.com/api/v2/project/gh/AchievementNetwork/$project/pipeline
+            https://circleci.com/api/v2/project/gh/AchievementNetwork/$project/pipeline)
+          echo $CIRCLE_JOB_INFO
         done
