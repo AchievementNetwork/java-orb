@@ -1,0 +1,16 @@
+description: >
+  Example of a kicking off a downstream build
+
+usage:
+  version: 2.1
+
+  orbs:
+    java: achievementnetwork/java-orb@1.0.0
+
+  jobs:
+    maven-build:
+      docker:
+        - image: cimg/base:stable
+      steps:
+        - java/build-downstream:
+            project: anet-core
