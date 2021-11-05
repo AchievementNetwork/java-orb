@@ -19,6 +19,8 @@ fi
 for project in ${PROJECTS-}; do
 	OUTPUT_FILE=$(mktemp circleci.XXXXXX)
 	TMP_FILES+=("${OUTPUT_FILE}")
+
+	# Create the build
 	CURL_CMD=(curl \
 		--request POST \
 		--silent \
@@ -35,9 +37,11 @@ for project in ${PROJECTS-}; do
 
 	case "${STATUS_CODE}" in
 		2*)
+			# If the build request was successful, look up the workflow that was created
 			WORKFLOW_NUMBER=$(jq -r ".number // \"\"" "${OUTPUT_FILE}")
 			PIPELINE_ID=$(jq -r ".id // \"\"" "${OUTPUT_FILE}")
-			if [ -n "${WORKFLOW_NUMBER}" ]  && [ -n "${PIPELINE_ID}" ]; then
+			WORKFLOW_ID=
+			if [ -n "${WORKFLOW_NUMBER}" ] && [ -n "${PIPELINE_ID}" ]; then
 				STATUS_CODE=$(curl \
 					--request GET \
 					--silent \
@@ -52,11 +56,13 @@ for project in ${PROJECTS-}; do
 						WORKFLOW_ID=$(jq -r ".items[0].id // \"\"" "${OUTPUT_FILE}")
 						if [ -n "${WORKFLOW_ID}" ]; then
 							echo "https://app.circleci.com/pipelines/github/AchievementNetwork/${project}/$WORKFLOW_NUMBER/workflows/$WORKFLOW_ID"
-							exit 0
 						fi
 				esac
 			fi
-			echo "Success reported but no job details found - check https://app.circleci.com/pipelines/github/AchievementNetwork/${project}"
+
+			if [ -z "${WORKFLOW_ID}" ]; then
+				echo "Success reported but no job details found - check https://app.circleci.com/pipelines/github/AchievementNetwork/${project}"
+			fi
 			;;
 		*)
 			echo "Unable to create build for ${project}"
