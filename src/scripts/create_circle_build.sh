@@ -6,28 +6,26 @@ set -u
 TMP_FILES=()
 trap 'if [ ${#TMP_FILES[@]} -ne 0 ]; then rm "${TMP_FILES[@]}"; fi' EXIT
 
-if [ -z "$1" ]; then
+if [ -z "${1-}" ]; then
 	echo "Usage: create_circle_build <project>" 1>&2
 	exit 1
 fi
 
-DATA_ARG=
-if [ -n "${BRANCH}" ]; then
-	DATA_ARG="--data '{\"branch\":\"${BRANCH}\"}'"
-fi
-
 OUTPUT_FILE=$(mktemp -t circleci)
 TMP_FILES+=("${OUTPUT_FILE}")
-STATUS_CODE=$(curl \
+CURL_CMD=(curl \
 	--request POST \
 	--silent \
 	--output "${OUTPUT_FILE}" \
 	--write-out "%{http_code}" \
 	--header "Circle-Token: ${CIRCLECI_API_TOKEN}" \
 	--header 'Accept: text/plain' \
-	--header 'Content-Type: application/json' \
-	${DATA_ARG} \
-	"https://circleci.com/api/v2/project/gh/AchievementNetwork/$1/pipeline")
+	--header 'Content-Type: application/json')
+if [ -n "${BRANCH-}" ]; then
+	CURL_CMD+=(--data "{\"branch\":\"${BRANCH}\"}")
+fi
+CURL_CMD+=("https://circleci.com/api/v2/project/gh/AchievementNetwork/$1/pipeline")
+STATUS_CODE=$("${CURL_CMD[@]}")
 
 case "${STATUS_CODE}" in
 	2*)
