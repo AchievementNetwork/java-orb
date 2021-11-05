@@ -21,8 +21,7 @@ parameters:
 steps:
   - run:
       name: Starting downstream build
-      command: |
-        export BRANCH=<<parameters.branch>>
-        for project in <<parameters.project>>; do
-          <<include(scripts/create_circle_build.sh)>> "${project}"
-        done
+      environment:
+        PROJECTS: <<parameters.project>>
+        BRANCH: <<parameters.branch>>
+      command: <<include(scripts/create_circle_build.sh)>>
