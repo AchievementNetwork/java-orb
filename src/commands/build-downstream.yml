@@ -14,8 +14,9 @@ parameters:
     type: string
     default: dev
   api-token:
-    description: The used to authorise the CircleCI build
-    type: string
+    description: The token used to authorise the CircleCI build
+    type: env_var_name
+    default: CIRCLECI_API_TOKEN
 
 steps:
   - run:
