@@ -6,12 +6,12 @@ set -u
 TMP_FILES=()
 trap 'if [ ${#TMP_FILES[@]} -ne 0 ]; then rm "${TMP_FILES[@]}"; fi' EXIT
 
-if [ -z "${$PROJECTS-}" ]; then
+if [ -z "${PROJECTS-}" ]; then
 	echo "No projects specified" 1>&2
 	exit 1
 fi
 
-if [ -z "${$CIRCLECI_API_TOKEN-}" ]; then
+if [ -z "${CIRCLECI_API_TOKEN-}" ]; then
 	echo "No api token specified" 1>&2
 	exit 1
 fi
