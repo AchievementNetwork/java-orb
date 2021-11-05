@@ -16,13 +16,8 @@ parameters:
       The same branch will be used for all projects specified.
     type: string
     default: dev
-  api-token:
-    description: The token used to authorise the CircleCI build
-    type: env_var_name
-    default: CIRCLECI_API_TOKEN
 
 steps:
   - build-downstream:
       project: << parameters.project >>
       branch: << parameters.branch >>
-      api-token: << parameters.api-token >>

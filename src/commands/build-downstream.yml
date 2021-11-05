@@ -13,10 +13,6 @@ parameters:
       The same branch will be used for all projects specified.
     type: string
     default: dev
-  api-token:
-    description: The token used to authorise the CircleCI build
-    type: env_var_name
-    default: CIRCLECI_API_TOKEN
 
 steps:
   - run:
@@ -24,4 +20,5 @@ steps:
       environment:
         PROJECTS: <<parameters.project>>
         BRANCH: <<parameters.branch>>
+      # The script implicitly expects the token to be in $CIRCLECI_API_TOKEN
       command: <<include(scripts/create_circle_build.sh)>>
