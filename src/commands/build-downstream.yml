@@ -31,4 +31,5 @@ steps:
             --data '{"branch":"<<parameters.branch>>"}' \
             https://circleci.com/api/v2/project/gh/AchievementNetwork/$project/pipeline)
           echo $CIRCLE_JOB_INFO
+          echo $CIRCLE_JOB_INFO | grep "id" 2>&1 > /dev/null
         done
