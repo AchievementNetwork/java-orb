@@ -1,0 +1,24 @@
+description: >
+  Build downstream project
+
+parameters:
+  project:
+    description: >
+      The name(s) of the downstream project(s) to build.
+      If providing multiple names they should be space separated.
+    type: string
+  branch:
+    description: >
+      The branch of the project(s) to build.
+      The same branch will be used for all projects specified.
+    type: string
+    default: dev
+  api-token:
+    description: The used to authorise the CircleCI build
+    type: string
+
+steps:
+  - build-downstream:
+      project: << parameters.project >>
+      branch: << parameters.branch >>
+      api-token: << parameters.api-token >>
