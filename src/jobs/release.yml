@@ -1,0 +1,30 @@
+description: >
+  Build project
+
+executor:
+  name: default
+  version: <<parameters.java-version>>
+
+parameters:
+  java-version:
+    description: The version of Java to use
+    type: string
+    default: '11'
+  maven-flags:
+    description: Additional flags to pass to Maven
+    type: string
+    default: -DuniqueVersion=false
+  maven-profile:
+    description: Maven profile to publish to
+    type: string
+    default: nexus
+  maven-settings:
+    description: Location of Maven settings file
+    type: string
+    default: .circleci/settings.xml
+
+steps:
+  - release:
+      maven-flags: << parameters.maven-flags >>
+      maven-profile: << parameters.maven-profile >>
+      maven-settings: << parameters.maven-settings >>

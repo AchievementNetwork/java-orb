@@ -1,0 +1,23 @@
+description: >
+  Deploy a release
+
+parameters:
+  maven-flags:
+    description: Additional flags to pass to Maven
+    type: string
+    default: -DuniqueVersion=false
+  maven-profile:
+    description: Maven profile to publish to
+    type: string
+    default: nexus
+  maven-settings:
+    description: Location of Maven settings file
+    type: string
+    default: .circleci/settings.xml
+
+steps:
+  - cache-dependencies
+  - run:
+      name: Build
+      command: |
+        mvn -s <<parameters.maven-settings>> -P<<parameters.maven-profile>> <<parameters.maven-flags>> deploy

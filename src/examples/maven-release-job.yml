@@ -1,0 +1,14 @@
+description: >
+  Example of a job that will release a package to a Maven repository
+
+usage:
+  version: 2.1
+
+  orbs:
+    java: achievementnetwork/java-orb@1.0.0
+
+  jobs:
+    maven-release:
+      executor: java/default
+      steps:
+        - java/release
