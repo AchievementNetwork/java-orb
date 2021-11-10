@@ -1,0 +1,24 @@
+description: >
+  Build downstream project
+
+parameters:
+  project:
+    description: >
+      The name(s) of the downstream project(s) to build.
+      If providing multiple names they should be space separated.
+    type: string
+  branch:
+    description: >
+      The branch of the project(s) to build.
+      The same branch will be used for all projects specified.
+    type: string
+    default: dev
+
+steps:
+  - run:
+      name: Starting downstream build
+      environment:
+        PROJECTS: <<parameters.project>>
+        BRANCH: <<parameters.branch>>
+      # The script implicitly expects the token to be in $CIRCLECI_API_TOKEN
+      command: <<include(scripts/create_circle_build.sh)>>
