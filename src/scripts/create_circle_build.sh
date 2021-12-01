@@ -38,6 +38,11 @@ for project in ${PROJECTS-}; do
 	case "${STATUS_CODE}" in
 		2*)
 			# If the build request was successful, look up the workflow that was created
+
+			# First sleep to allow CircleCI to reach consistency
+			sleep 5
+
+			# Now look up the workflow
 			WORKFLOW_NUMBER=$(jq -r ".number // \"\"" "${OUTPUT_FILE}")
 			PIPELINE_ID=$(jq -r ".id // \"\"" "${OUTPUT_FILE}")
 			WORKFLOW_ID=
