@@ -16,7 +16,9 @@ parameters:
     default: .circleci/settings.xml
 
 steps:
-  - cache-dependencies
+  - cache-dependencies:
+      maven-flags: <<parameters.maven-flags>>
+      maven-settings: <<parameters.maven-settings>>
   - run:
       name: Build
       command: |
