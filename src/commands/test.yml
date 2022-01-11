@@ -74,6 +74,10 @@ steps:
   - run:
       name: Copy over test coverage artifacts
       command: |
-        cp -r << parameters.test-report-directory >> << parameters.artifact-directory >>
+        if [ -d "<<parameters.test-report-directory>>" ]; then
+            cp -r << parameters.test-report-directory >> << parameters.artifact-directory >>
+        else
+            echo "Report directory <<parameters.test-report-directory>> not found"
+        fi
   - store_artifacts:
       path: << parameters.artifact-directory >>
