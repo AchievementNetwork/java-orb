@@ -65,8 +65,12 @@ steps:
               export JACOCO_SOURCE_PATH=src/main/java
 
               # Upload the coverage report
-              ./cc-test-reporter format-coverage -t jacoco << parameters.test-coverage-file >> -p github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/
-              ./cc-test-reporter upload-coverage
+              if [ -f "<<parameters.test-coverage-file>>" ]; then
+                  ./cc-test-reporter format-coverage -t jacoco << parameters.test-coverage-file >> -p github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/
+                  ./cc-test-reporter upload-coverage
+              else
+                  echo "Coverage file <<parameters.test-coverage-file>> not found"
+              fi
   - run:
       name: Copy over test coverage artifacts
       command: |
