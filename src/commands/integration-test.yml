@@ -28,7 +28,7 @@ steps:
   - run:
       name: Integration Tests
       command: |
-        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> integration-test
+        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> integration-test failsafe:verify
   - run:
       name: Copy over integration test artifacts
       command: |
