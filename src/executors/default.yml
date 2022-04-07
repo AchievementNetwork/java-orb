@@ -2,7 +2,7 @@ description: >
   Default executor for Java/Spring Boot projects
 
 docker:
-  - image: circleci/openjdk:<<parameters.version>>-jdk
+  - image: cimg/openjdk:<<parameters.version>>.0
 
 parameters:
   version:
