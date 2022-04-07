@@ -1,0 +1,41 @@
+description: >
+  Run tests with code coverage
+
+parameters:
+  artifact-directory:
+    description: Directory to place integration test artifacts into
+    type: string
+    default: /tmp/artifacts
+  maven-settings:
+    description: Location of Maven settings file
+    type: string
+    default: .circleci/settings.xml
+  maven-flags:
+    description: Additional flags to pass to Maven
+    type: string
+    default: -B -q
+  test-report-directory:
+    description: Directory to find integration test reports
+    type: string
+    default: target/reports
+
+steps:
+  - cache-dependencies
+  - run:
+      name: Create a build artifact directory
+      command: |
+        mkdir -p << parameters.artifact-directory >>
+  - run:
+      name: Integration Tests
+      command: |
+        mvn -s << parameters.maven-settings >> << parameters.maven-flags >> integration-test failsafe:verify
+  - run:
+      name: Copy over integration test artifacts
+      command: |
+        if [ -d "<<parameters.test-report-directory>>" ]; then
+            cp -r << parameters.test-report-directory >> << parameters.artifact-directory >>
+        else
+            echo "Report directory <<parameters.test-report-directory>> not found"
+        fi
+  - store_artifacts:
+      path: << parameters.artifact-directory >>
