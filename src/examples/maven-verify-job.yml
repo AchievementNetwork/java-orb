@@ -1,0 +1,14 @@
+description: >
+  Example of a job that will run Maven's verify step
+
+usage:
+  version: 2.1
+
+  orbs:
+    java: achievementnetwork/java-orb@1.0.0
+
+  jobs:
+    maven-test:
+      executor: java/default
+      steps:
+        - java/verify
