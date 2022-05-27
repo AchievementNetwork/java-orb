@@ -13,7 +13,7 @@ parameters:
   maven-flags:
     description: Additional flags to pass to Maven
     type: string
-    default: -B -q
+    default: -B
   test-coverage-file:
     description: File containing test coverage information
     type: string
