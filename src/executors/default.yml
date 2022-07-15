@@ -9,4 +9,4 @@ parameters:
     description: >
       The version of Java to use
     type: string
-    default: '11'
+    default: '17'

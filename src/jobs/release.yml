@@ -9,7 +9,7 @@ parameters:
   java-version:
     description: The version of Java to use
     type: string
-    default: '11'
+    default: '17'
   maven-flags:
     description: Additional flags to pass to Maven
     type: string
